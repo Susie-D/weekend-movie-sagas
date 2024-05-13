@@ -18,6 +18,35 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/:id', (req, res) => {
+  const movieQuery = `
+    SELECT * FROM movies
+    WHERE id = ${req.params.id}
+  `
+  pool.query(movieQuery)
+    .then(result => {
+      let movie = result.rows[0];
+      const query = `
+      SELECT m.id, m.title, g.name FROM movies m
+      INNER JOIN movies_genres mg
+      ON mg.movie_id = m.id
+      INNER JOIN genres g
+      ON mg.genre_id = g.id
+      WHERE m.id = ${req.params.id};
+    `;
+      pool.query(query)
+        .then(result => {
+          movie.genres = result.rows
+          res.send(movie);
+        })
+        .catch(err => {
+          console.log('Error: Get a movie id,', err);
+          res.sendStatus(500);
+        })
+
+    })
+})
+
 router.post('/', (req, res) => {
   console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie
@@ -60,7 +89,7 @@ router.post('/', (req, res) => {
           // catch for second query
           console.log(err);
           res.sendStatus(500)
-      })
+        })
     }).catch(err => { // 👈 Catch for first query
       console.log(err);
       res.sendStatus(500)

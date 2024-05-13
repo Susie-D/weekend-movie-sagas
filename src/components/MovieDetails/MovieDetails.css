@@ -1,0 +1,34 @@
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5em;
+  background: black;
+}
+
+.movie-details-header {
+  color: white;
+}
+
+.movie-details-content {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 1em;
+}
+
+.movie-details-description {
+  margin: 2em;
+}
+
+.movie-details-genre {
+  color: white;
+}
+
+.home-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+p {
+  color: white;
+}

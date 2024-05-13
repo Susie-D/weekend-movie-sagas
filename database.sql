@@ -21,6 +21,14 @@ CREATE TABLE "movies_genres" (
   "genre_id" INT REFERENCES "genres" NOT NULL
 );
 
+-- JOIN MOVIES AND GENRES 
+SELECT m.id, m.title, g.name FROM movies m
+INNER JOIN movies_genres mg
+ON mg.movie_id = m.id	
+INNER JOIN genres g
+ON mg.genre_id = g.id
+WHERE m.id = $
+
 --------[ DATA! ]---------
 
 -- Starter movies
